@@ -1,6 +1,7 @@
 {
     "baseUrl": "https://cp.op-stage.op-stage.net",
-    "modifyObstructiveCode": false
+    "modifyObstructiveCode": false,
+    "failOnStatusCode" : false
  
 }
 

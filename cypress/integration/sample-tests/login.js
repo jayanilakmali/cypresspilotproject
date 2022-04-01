@@ -60,7 +60,7 @@ describe('RCP Sign in', () => {
         cy.wait(2000)
          cy.get('input[value="PERSONAL"]').click()
          cy.wait(5000)
-         cy.get('.button').click('center' , {force : true}, { multiple: true })
+         cy.contains('Next').should('be.visible').click({force : true}).wait(3000).click()
          cy.wait(5000)
           //assert
       })
