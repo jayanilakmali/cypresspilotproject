@@ -6,8 +6,12 @@ describe('RCP Sign up', () => {
 
     it.only('sign up to OP', () => {
 
-        const emailAddress = ('jlakmali+' + (Date.now()/1000) + '@openprovider.nl')
+        const emailAddress = ('jlakmali+' + (Date.now()) + '@openprovider.nl')
         cy.visit('/signup')
+
+        // cy.server();
+        // cy.route('POST', '/web/rest/v2/authentication/login').as('login');
+
         cy.get('input[name="email"]')
             .type(emailAddress)
         cy.get('input[name="password"]')
@@ -15,51 +19,43 @@ describe('RCP Sign up', () => {
         cy.get('.checkmark').click()
         cy.get('button[type="submit"]').click()
         //cy.clearCookies()
-        cy.wait(5000)
-        cy.contains('Continue ->').click()
-        //cy.screenshot()
-    
-    })
+        // cy.wait('@login');
 
-    it.only('fill personal info', () => {
+        cy.wait(5000)
+        cy.contains('Welcome to Openprovider!').should('be.visible');
+        cy.contains('Continue ->').click()
 
        cy.get('input[name="firstName"]').type("QA")
        cy.get('input[name="lastName"]').type("Automation user")
        cy.get('.iti__flag-container').click()
        cy.get('[data-country-code="lk"]').click()
        cy.get('input[type="tel"]').type("123456780")
-       cy.get('input[name="firstName"]').click()
-       cy.wait(2000)
        cy.get('.button--color-primary').click()
-       cy.wait(5000)
-       
-   
-        //cy.screenshot()
-        //assert
-    })
 
-    it.only('select account type', () => {
         cy.get('input[value="PERSONAL"]').click()
         cy.get('button[type="submit"]').click()
-        cy.wait(5000)
-        cy.screenshot()
+        
+        // cy.screenshot()
          //assert
-     })
-
-     it('Fill more info', () => {
 
         cy.get('input[name="city"]').type("Colombo")
         cy.get('input[name="street"]').type("pettah Street")
         cy.get('input[name="number"]').type("123")
         cy.get('input[name="zipcode"]').type("11015")
-        cy.get('.background--x-light-grey').click()
+        cy.get('.background--x-light-grey').contains('EUR').click()
         cy.contains('USD').click()
         cy.get('button[type="submit"]').click()
 
+        cy.contains('How big is your domain portfolio?').should('be.visible');
+        cy.get('input[value="BETWEEN_500_AND_1000"]').click()
+        cy.get('button[type="submit"]').click()
+
+
+        cy.contains('Congratulations!').should('be.visible');
+        cy.contains('Get started!').click()
         
-    
-         //cy.screenshot()
-         //assert
+        //cy.url().should('eq', 'https://cp.op-stage.op-stage.net/dashboard')
+        cy.contains('Register New Domain').should('be.visible');
      })
 
 })
